@@ -9,7 +9,7 @@ describe("Test Case Login", () => {
     })
 
     //Mencoba menggunakan selector xpath
-    it("TC01-Login Succes", () => {
+    it.only("TC01-Login Succes", () => {
         //cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         
         //proses memasukkan username
@@ -20,10 +20,15 @@ describe("Test Case Login", () => {
         loginSteps.masukkanPassword(loginData.validPassword);
         //cy.xpath("//input[@placeholder='Password']").type("admin123").should("be.visible");
         
+        //menerapkan intercepts
+        cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/dashboard/employees/action-summary').as('actoinSummary');
+
         //proses klik tombol login
         loginSteps.clikButton();
         //cy.xpath("//button[normalize-space()='Login']").click();
-                
+        
+        cy.wait('@actoinSummary');
+
         //proses assertion pindah halaman dashboard
         loginSteps.assertionLoginSuccess();
         //cy.url().should("include","/dashboard/index");
