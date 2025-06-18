@@ -2,6 +2,7 @@
     "validUsername" : "Admin",
     "validPassword" : "admin123",
     "invalidUsername" : "Lingga",
-    "invalidPassword" : "lingga123"
+    "invalidPassword" : "lingga123",
+    "reset" : "Lingga"
 }
 
