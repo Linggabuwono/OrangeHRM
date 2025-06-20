@@ -1,11 +1,19 @@
 /// <reference types="cypress"/>
 
 describe('Reqres API Testing', () => {
-    it('GET API Testing', () => {
-        cy.request('GET', 'https://reqres.in/api/users')
+    it('POST API Testing', () => {
+        cy.request({
+            method:'POST',
+            url:'https://reqres.in/api/users',
+            failOnStatusCode: false,
+            body: {
+                name: 'Lingga',
+                job: 'Direktur'
+            }
+        })
         .then((response) => {
-            expect(response.status).to.eq(201)
+            expect(response.status).to.eq(401)
             expect(response.body).to.not.be.null
         })
     })
-})
+})  
