@@ -105,7 +105,33 @@ describe("Test Case Login", () => {
         cy.get("H6").should("contain","Reset Password link sent successfully");
     })
 
-    it("TC06-LoginSuccess > Dashboard", () => {
+    it("TC06-LoginSuccess > Dashboard > Directory", () => {
+        //proses input username benar
+        loginSteps.masukkanUsername(loginData.validUsername)
+        //proses input password benar
+        loginSteps.masukkanPassword(loginData.validPassword)
+        //menerapkan intercepts
+        cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/core/i18n/messages').as('messages');
+        //proses klik tombol login
+        loginSteps.clikButtonLogin()
+        cy.wait('@messages');
+        //assertion berhasil login
+        loginSteps.assertionLoginSuccess()
+        //proses klik sidebar menu >> Directory
+        loginSteps.clickButtonSideBarDirectory()
+        //assertion pindah halaman sidebar menu >> Directory
+        loginSteps.assertionPindahHalamanSidebarDirectory
+        //proses memasukkan username untuk mencari user
+        loginSteps.masukkanEmployeeDirectory(loginData.employeeDirectory)
+        //proses klik tombol Search
+        loginSteps.clickButtonSearchDirectory()
+        //assertion muncul tulisan Records Found
+        loginSteps.assertionJudulRecordFoundDirectory()
+        //assertion muncul tabel dengan data Peter
+        loginSteps.assertionMunculTabelDirectory()
+    })
+
+    it("TC07-LoginSuccess > Dashboard > Admin", () => {
         //proses input username benar
         loginSteps.masukkanUsername(loginData.validUsername)
         //proses input password benar
@@ -120,14 +146,14 @@ describe("Test Case Login", () => {
         //proses klik sidebar menu >> Admin
         loginSteps.clickButtonSideBarAdmin()
         //assertion pindah halaman sidebar menu >> Admin
-        loginSteps.assertionPindahHalamanSidebarAdmin()
+        loginSteps.assertionPindahHalamanSidebarAdmin
         //proses memasukkan username untuk mencari user
         loginSteps.masukkanUsernameSystemUser(loginData.userSystem)
         //proses klik tombol Search
-        loginSteps.clickButtonSideBarAdmin()
-        //assertion muncul tabel dengan data Admin
-        loginSteps.assertionMunculTabel()
+        loginSteps.clickButtonSearchAdmin()
         //assertion muncul tulisan Records Found
         loginSteps.assertionJudulRecordsFound()
+        //assertion muncul tabel dengan data Admin
+        loginSteps.assertionMunculTabelAdmin()
     })
 })

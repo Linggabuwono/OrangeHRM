@@ -24,6 +24,13 @@ class loginSteps {
         cy.get(':nth-child(2) > .oxd-input').type(userSystem).should('have.value', userSystem)
     }
 
+    masukkanEmployeeDirectory(userDirectory) {
+        cy.get('.oxd-autocomplete-text-input > input').type(userDirectory).should('have.value', userDirectory)
+        cy.wait(7000)
+        cy.get('.oxd-autocomplete-option').click()
+        cy.get('.oxd-autocomplete-text-input > input').should('have.value', 'siu  do')
+    }
+
     //============================================CLICK BUTTON============================================//
     clikButtonLogin() {
         cy.xpath("//button[normalize-space()='Login']").should('be.visible')
@@ -44,6 +51,20 @@ class loginSteps {
         cy.contains('Admin').should('be.visible')
         cy.contains('Admin').click();
     }
+
+    clickButtonSearchAdmin() {
+        cy.get('.oxd-form-actions > .oxd-button--secondary').click()
+    }
+
+    clickButtonSideBarDirectory() {
+        cy.contains('Directory').should('be.visible')
+        cy.contains('Directory').click();
+    }
+
+    clickButtonSearchDirectory() {
+        cy.get('.oxd-button--secondary').should('be.visible')
+        cy.get('.oxd-button--secondary').click()
+    }
     
 
     //============================================ASSERTION============================================//
@@ -63,9 +84,18 @@ class loginSteps {
         cy.url().should('include', '/index.php/admin/viewSystemUsers')
     }
 
-    assertionMunculTabel() {
+    assertionPindahHalamanSidebarDirectory() {
+        cy.url().should('include', '/index.php/directory/viewDirectory')
+    }
+
+    assertionMunculTabelAdmin() {
         cy.get('.orangehrm-container').should('be.visible')
         cy.get('.orangehrm-container').should('contain', 'Admin')
+    }
+    
+    assertionMunculTabelDirectory(){
+        cy.get('.oxd-sheet').should('be.visible')
+        cy.get('.oxd-sheet').should('contain', 'siu  do')
     }
 
     assertionJudulResetPassword() {
@@ -74,6 +104,10 @@ class loginSteps {
 
     assertionJudulRecordsFound() {
         cy.get('.orangehrm-horizontal-padding > .oxd-text').should('be.visible')
+    }
+
+    assertionJudulRecordFoundDirectory(){
+        cy.get('.orangehrm-horizontal-padding').should('be.visible')
     }
 }
 
