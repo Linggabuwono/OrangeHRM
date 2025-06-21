@@ -1,163 +1,99 @@
-import loginSteps from "../../support/pageObjects/loginSteps"
-import loginData from "../../fixtures/loginData.json"
-
 describe("Test Case Login", () => {
-
-    beforeEach (() =>
-    {
-        loginSteps.visit();
-    })
-
     //Mencoba menggunakan selector xpath
     it("TC01-Login Succes", () => {
-        //cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-        
+        //proses masuk ke website orangeHRM
+        cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         //proses memasukkan username
-        loginSteps.masukkanUsername(loginData.validUsername);
-        //cy.xpath("//input[@placeholder='Username']").type("Admin").should("be.visible");
-        
+        cy.xpath("//input[@placeholder='Username']").type("Admin").should("be.visible");
         //proses memasukkan password
-        loginSteps.masukkanPassword(loginData.validPassword);
-        //cy.xpath("//input[@placeholder='Password']").type("admin123").should("be.visible");
-        
-        //menerapkan intercepts
-        cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/dashboard/employees/action-summary').as('actoinSummary');
-
+        cy.xpath("//input[@placeholder='Password']").type("admin123").should("be.visible");
         //proses klik tombol login
-        loginSteps.clikButton();
-        //cy.xpath("//button[normalize-space()='Login']").click();
-        
-        cy.wait('@actoinSummary');
-
+        cy.xpath("//button[normalize-space()='Login']").click();
         //proses assertion pindah halaman dashboard
-        loginSteps.assertionLoginSuccess();
-        //cy.url().should("include","/dashboard/index");
+        cy.url().should("include","/dashboard/index");
     })
 
     //Mencoba menggunakan selector attribute
     it("TC02-Login Failed Wrong Username", () => {
+        //proses masuk ke website orangeHRM
+        cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         //proses input username salah
-        loginSteps.masukkanUsername(loginData.invalidUsername);
-        //cy.get('[placeholder="Username"]').type("Lingga").should("be.visible");
-
-        //proses input password salah
-        loginSteps.masukkanPassword(loginData.validPassword);
-        //cy.get('[placeholder="Password"]').type("admin123").should("be.visible");
-        
+        cy.get('[placeholder="Username"]').type("Lingga").should("be.visible");
+        //proses input password benar
+        cy.get('[placeholder="Password"]').type("admin123").should("be.visible");
         //proses klik tombol login
-        loginSteps.clikButton();
-        //cy.get('[type="submit"]').click();
-        
+        cy.get('[type="submit"]').click();
         //proses assertion gagal login
-        loginSteps.assertionMessageGagal();
-        //cy.get('.oxd-alert').should("contain","Invalid credentials");
+        cy.get('.oxd-alert').should("contain","Invalid credentials");
     })
 
     it("TC03-Login Failed Wrong Password", () => {
+        //proses masuk ke website orangeHRM
+        cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         //proses input username benar
-        loginSteps.masukkanUsername(loginData.validUsername);
-        //cy.get('[placeholder="Username"]').type("Admin").should("be.visible");
-        
+        cy.get('[placeholder="Username"]').type("Admin").should("be.visible");
         //proses input password salah
-        loginSteps.masukkanPassword(loginData.invalidPassword);
-        //cy.get('[placeholder="Password"]').type("team123").should("be.visible");
-        
+        cy.get('[placeholder="Password"]').type("team123").should("be.visible");
         //proses klik tombol login
-        loginSteps.clikButton();
-        //cy.get('.oxd-button').click();
-        
+        cy.get('.oxd-button').click();
         //proses assertion gagal login
-        loginSteps.assertionMessageGagal();
-        //cy.get('.oxd-alert').should("contain","Invalid credentials");
+        cy.get('.oxd-alert').should("contain","Invalid credentials");
     })
 
     it("TC04-Forgot Password", () => {
+        //proses masuk ke website orangeHRM
+        cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         //proses input username salah
-        loginSteps.masukkanUsername(loginData.invalidUsername)
-        //cy.get('[placeholder="Username"]').type("Lingga").should("be.visible");
-        
+        cy.get('[placeholder="Username"]').type("Lingga").should("be.visible");
         //proses input password salah
-        loginSteps.masukkanPassword(loginData.invalidPassword)
-        //cy.get('[placeholder="Password"]').type("team123").should("be.visible");
-        
+        cy.get('[placeholder="Password"]').type("team123").should("be.visible");
         //proses klik tombol login
-        loginSteps.clikButton()
-        //cy.get(".oxd-button").click();
-        
+        cy.get(".oxd-button").click();
         //assertion pesan gagal login
-        loginSteps.assertionMessageGagal()
-        //cy.get(".oxd-alert").should("contain","Invalid credentials");
-        
+        cy.get(".oxd-alert").should("contain","Invalid credentials");
         //proses klik tombol forgot password
-        loginSteps.clikButtonForget()
-        //cy.get(".orangehrm-login-forgot").click();
-        
+        cy.get(".orangehrm-login-forgot").click();
         //assertion pindah halaman ke reset password
-        loginSteps.assertionPindahHalamaForgotPassword()
-        //cy.url().should("include","/auth/requestPasswordResetCode");
-        
+        cy.url().should("include","/auth/requestPasswordResetCode");
         //assertion judul halaman reset password
-        loginSteps.assertionJudulResetPassword()
-        //cy.get("H6").should("contain","Reset Password");
+        cy.get("H6").should("contain","Reset Password");
     })
 
     it("TC05-ResetPassword", () => {
+        //proses masuk ke website orangeHRM
+        cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         //proses input username salah
-        loginSteps.masukkanUsername(loginData.invalidUsername)
-        //cy.get('[placeholder="Username"]').type("Lingga").should("be.visible");
-        
+        cy.get('[placeholder="Username"]').type("Lingga").should("be.visible");
         //proses input password salah
-        loginSteps.masukkanPassword(loginData.invalidPassword)
-        //cy.get('[placeholder="Password"]').type("tim123").should("be.visible");
-        
+        cy.get('[placeholder="Password"]').type("tim123").should("be.visible");
         //proses klik tombol login
-        loginSteps.clikButton()
-        //cy.get(".oxd-button").click();
-        
+        cy.get(".oxd-button").click();
         //assertion pesan gagal login
-        loginSteps.assertionMessageGagal()
-        //cy.get(".oxd-alert").should("contain","Invalid credentials");
-        
+        cy.get(".oxd-alert").should("contain","Invalid credentials");
         //proses klik tombol forgot
-        loginSteps.clikButtonForget()
-        //cy.get(".orangehrm-login-forgot").click();
-        
+        cy.get(".orangehrm-login-forgot").click();
         //assertion pindah halaman reset password
-        loginSteps.assertionPindahHalamaForgotPassword()
-        //cy.url().should("include","/auth/requestPasswordResetCode");
-
+        cy.url().should("include","/auth/requestPasswordResetCode");
         //assertion judul halaman reset password
-        loginSteps.assertionJudulResetPassword()
-        //cy.get("H6").should("contain","Reset Password");
-
+        cy.get("H6").should("contain","Reset Password");
         //proses input username reset password
-        loginSteps.masukkanUsernameResetPassword(loginData.reset)
-        //cy.get(".oxd-input").type("Lingga").should("be.visible");
-        
+        cy.get(".oxd-input").type("Lingga").should("be.visible");
         //proses klik tombol reset
-        loginSteps.clickButtonReset()
-        //cy.get(".oxd-button--secondary").click();
-        
+        cy.get(".oxd-button--secondary").click();
         cy.get(".orangehrm-card-container").should("be.visible");
-        
         cy.get("H6").should("contain","Reset Password link sent successfully");
     })
 
     it("TC06-LoginSuccess > Dashboard", () => {
+        //proses masuk ke website orangeHRM
+        cy.visit("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         //proses input username benar
-        loginSteps.masukkanUsername(loginData.validUsername)
-        //cy.get('[placeholder="Username"]').type("Admin").should("be.visible");
-        
+        cy.get('[placeholder="Username"]').type("Admin").should("be.visible");
         //proses input password benar
-        loginSteps.masukkanPassword(loginData.validPassword)
-        //cy.get('[placeholder="Password"]').type("admin123").should("be.visible");
-        
+        cy.get('[placeholder="Password"]').type("admin123").should("be.visible");
         //proses klik tombol login
-        loginSteps.clikButton()
-        //cy.get('.oxd-button').click();
-        
-        //proses assertion berhasil login dan masuk halaman dashboard
-        loginSteps.assertionLoginSuccess()
-        //cy.url().should("include","/dashboard/index");
+        cy.get('.oxd-button').click();
+        //assertion berhasil login
+        cy.url().should("include","/dashboard/index");
     })
 })

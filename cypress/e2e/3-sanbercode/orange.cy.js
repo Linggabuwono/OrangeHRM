@@ -40,7 +40,7 @@ describe("Test Case Login", () => {
         loginSteps.masukkanUsername(loginData.invalidUsername);
         //cy.get('[placeholder="Username"]').type("Lingga").should("be.visible");
 
-        //proses input password salah
+        //proses input password benar
         loginSteps.masukkanPassword(loginData.validPassword);
         //cy.get('[placeholder="Password"]').type("admin123").should("be.visible");
         
